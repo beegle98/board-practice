@@ -24,6 +24,12 @@ public class UserController {
     @Autowired(required = false)
     private UserService userService;
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @GetMapping("/login")
     public String login() {
         logger.debug("로그인 화면 이동....................");
@@ -60,4 +66,5 @@ public class UserController {
             return "/"; // 아직 error.jsp 없음
         }
     }
+
 }
