@@ -12,13 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired(required = false)
+    @Autowired
     private UserRepository userRepository;
+
+    @Override
+    public int idCheck(String userId) throws Exception {
+        return userRepository.idCheck(userId);
+    }
 
     @Override
     public User login(String email, String password) {
         try {
-            User user = userRepository.idSearch(email);
+            User user = userRepository.login(email);
             System.out.println(user);
             if (user == null) {
                 throw new UserException("등록되지 않은 아이디입니다.");
@@ -35,7 +40,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void join(User user) {
-
+        try {
+            User find = userRepository.login(user.getEmail());
+            if (find != null) {
+                throw new UserException("이미 등록된 아이디 입니다.");
+            }
+            userRepository.join(user);
+        } catch (SQLException e) {
+            throw new UserException("회원 정보 처리 중 오류 발생!!!");
+        }
     }
 
     @Override

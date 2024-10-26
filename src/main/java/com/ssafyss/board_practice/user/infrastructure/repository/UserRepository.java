@@ -6,7 +6,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserRepository {
-    User idSearch(String email) throws SQLException;
+
+    int idCheck(String username) throws SQLException;
+
+    User login(String email) throws SQLException;
 
     void join(User user) throws SQLException;
 

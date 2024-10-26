@@ -67,10 +67,10 @@
     });
 
     document.querySelector("#btn-login").addEventListener("click", function () {
-        if (!document.querySelector("#userid").value) {
+        if (!document.querySelector("#email").value) {
             alert("아이디 입력!!");
             return;
-        } else if (!document.querySelector("#userpwd").value) {
+        } else if (!document.querySelector("#password").value) {
             alert("비밀번호 입력!!");
             return;
         } else {

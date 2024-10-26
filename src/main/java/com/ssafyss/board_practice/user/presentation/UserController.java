@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/user")
@@ -21,7 +23,7 @@ public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired(required = false)
+    @Autowired
     private UserService userService;
 
     @GetMapping("/logout")
@@ -31,9 +33,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public void login() {
         logger.debug("로그인 화면 이동....................");
-        return "user/login";
     }
 
     @PostMapping("/login")
@@ -67,4 +68,29 @@ public class UserController {
         }
     }
 
+    @GetMapping("/join")
+    public void join() {
+        logger.debug("회원가입 화면 이동....................");
+    }
+
+    @GetMapping("/{userid}")
+    @ResponseBody
+    public String idCheck(@PathVariable("userid") String userId) throws Exception {
+        logger.debug("idCheck userid : {}", userId);
+        int cnt = userService.idCheck(userId);
+        return cnt + "";
+    }
+
+    @PostMapping("/join")
+    public String join(User user, Model model) {
+        logger.debug("user info : {}", user);
+        try {
+            userService.join(user);
+            return "redirect:/user/login";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
+            return "/";
+        }
+    }
 }

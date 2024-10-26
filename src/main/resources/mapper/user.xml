@@ -4,12 +4,20 @@
 
 <mapper namespace="com.ssafyss.board_practice.user.infrastructure.repository.UserRepository">
 
-    <select id="idSearch" parameterType="string" resultType="User">
+    <select id="idCheck" parameterType="String" resultType="int">
+        select count(email)
+        from user
+        where email = #{email}
+    </select>
+    <select id="login" parameterType="string" resultType="User">
         select *
         from user
         where email = #{email}
     </select>
-
+    <insert id="join" parameterType="User">
+        insert into user(name, email, password, createdAt)
+        values (#{name}, #{email}, #{password}, now())
+    </insert>
     <!--   <delete id="remove" parameterType="string">
            delete
            from members
@@ -23,10 +31,7 @@
            where id = #{id}
        </update>
 
-       <insert id="join" parameterType="Member">
-           insert into members(id, password, name, join_date)
-           values (#{id}, #{password}, #{name}, now())
-       </insert>-->
+       -->
 </mapper>
 
 
