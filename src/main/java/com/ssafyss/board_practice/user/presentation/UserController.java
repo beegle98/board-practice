@@ -21,7 +21,7 @@ public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
+    @Autowired(required = false)
     private UserService userService;
 
     @GetMapping("/login")

@@ -44,23 +44,23 @@
                         <label class="form-check-label" for="saveid"> 아이디저장 </label>
                     </div>
                     <div class="mb-3">
-                        <label for="userid" class="form-label">아이디 : </label>
+                        <label for="email" class="form-label">아이디 : </label>
                         <input
                                 type="text"
                                 class="form-control"
-                                id="userid"
-                                name="userid"
+                                id="email"
+                                name="email"
                                 placeholder="아이디..."
                                 value="${saveid}"
                         />
                     </div>
                     <div class="mb-3">
-                        <label for="userpwd" class="form-label">비밀번호 : </label>
+                        <label for="password" class="form-label">비밀번호 : </label>
                         <input
                                 type="password"
                                 class="form-control"
-                                id="userpwd"
-                                name="userpwd"
+                                id="password"
+                                name="password"
                                 placeholder="비밀번호..."
                         />
                     </div>
@@ -88,10 +88,10 @@
         });
 
         document.querySelector("#btn-login").addEventListener("click", function () {
-            if (!document.querySelector("#userid").value) {
+            if (!document.querySelector("#email").value) {
                 alert("아이디 입력!!");
                 return;
-            } else if (!document.querySelector("#userpwd").value) {
+            } else if (!document.querySelector("#password").value) {
                 alert("비밀번호 입력!!");
                 return;
             } else {

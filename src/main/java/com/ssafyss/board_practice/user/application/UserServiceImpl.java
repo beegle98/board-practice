@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    @Autowired(required = false)
     private UserRepository userRepository;
 
     @Override
