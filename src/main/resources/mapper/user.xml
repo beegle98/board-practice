@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafyss.board_practice.user.infrastructure.repository.userRepository">
+
+    <select id="idSearch" parameterType="string" resultType="User">
+        select *
+        from user
+        where email = #{email}
+    </select>
+
+    <!--   <delete id="remove" parameterType="string">
+           delete
+           from members
+           where id = #{id}
+       </delete>
+
+       <update id="update" parameterType="Member">
+           update members
+           set name=#{name},
+               password = #{password}
+           where id = #{id}
+       </update>
+
+       <insert id="join" parameterType="Member">
+           insert into members(id, password, name, join_date)
+           values (#{id}, #{password}, #{name}, now())
+       </insert>-->
+</mapper>
+
+
