@@ -1,3 +1,4 @@
+
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -28,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `boardpractice`.`User` (
   `oauthType` CHAR(255) NULL,
   `email` CHAR(255) NOT NULL,
   `password` CHAR(60) NOT NULL,
+  `name` varchar(20) NOT NULL,
   `profileImage` VARCHAR(255) NULL,
   `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deletedAt` TIMESTAMP NULL,
@@ -48,10 +50,9 @@ CREATE TABLE IF NOT EXISTS `boardpractice`.`Todo` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `userId` BIGINT NOT NULL,
   `content` VARCHAR(50) NOT NULL,
-  `completed` TINYINT(1) NOT NULL DEFAULT 0,
-  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastModifiedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deletedAt` TIMESTAMP NULL,
-  `updatedAt` TIMESTAMP NULL,
+  `completed` TINYINT(1) NOT NULL DEFAULT 0,
   `deleted` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
@@ -68,8 +69,19 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-insert into user(email, password) values('ssafy@ssafy.com', 'qwertyuiopsdfghm456789sdfghj');
-insert into user(email, password) values('admin@ssafy.com', 'asdfghjwertyui1234562345678');
 
-insert into todo(userId, content) values(1, '알고리즘 1문제 풀기');
-insert into todo(userId, content) values(1, '스프링 강의 1개 듣기');
+insert into user(email, password, name)
+values ('ssafy@ssafy.com', 'qwertyuiopsdfghm456789sdfghj', '김싸피');
+insert into user(email, password, name)
+values ('admin@ssafy.com', 'asdfghjwertyui1234562345678', '관리자');
+
+insert into todo(userId, content)
+values (1, '알고리즘 1문제 풀기');
+insert into todo(userId, content)
+values (1, '스프링 강의 1개 듣기');
+
+select *
+from user;
+
+select *
+from todo;
