@@ -2,9 +2,8 @@ package com.ssafyss.board_practice.user.infrastructure.repository;
 
 import com.ssafyss.board_practice.user.domain.User;
 import java.sql.SQLException;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
+
 public interface UserRepository {
 
     int idCheck(String username) throws SQLException;
