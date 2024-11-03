@@ -8,10 +8,13 @@ import com.ssafyss.board_practice.todo.application.exception.ForbiddenUserToUpda
 import com.ssafyss.board_practice.todo.application.exception.NotFoundTodoException;
 import com.ssafyss.board_practice.todo.domain.Todo;
 import com.ssafyss.board_practice.todo.infrastructure.repository.TodoRepository;
+import com.ssafyss.board_practice.todo.presentation.TodoController;
 import com.ssafyss.board_practice.user.application.exception.NotFoundUserException;
 import com.ssafyss.board_practice.user.domain.User;
 import com.ssafyss.board_practice.user.infrastructure.repository.UserRepository;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class TodoService {
+
+    private static final Logger log = LoggerFactory.getLogger(TodoController.class);
 
     private TodoRepository todoRepository;
     private UserRepository userRepository;

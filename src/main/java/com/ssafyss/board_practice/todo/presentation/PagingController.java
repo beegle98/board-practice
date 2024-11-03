@@ -39,7 +39,7 @@ public class PagingController {
             @RequestParam int size,
             @RequestParam int page
     ) {
-        PagingByOffsetDto pagingByOffsetDto = new PagingByOffsetDto(tempUserId, page, size);
+        PagingByOffsetDto pagingByOffsetDto = new PagingByOffsetDto(tempUserId, size, page);
         List<ReadTodoDto> readTodos = todoService.readTodosByOffset(pagingByOffsetDto);
         ReadTodoResponse response = ReadTodoResponse.from(readTodos);
         log.info("readTodosByOffset : {}", response);
@@ -51,7 +51,7 @@ public class PagingController {
             @RequestParam int size,
             @RequestParam Long id
     ) {
-        PagingByCursorDto pagingByCursorDto = new PagingByCursorDto(tempUserId, id, size);
+        PagingByCursorDto pagingByCursorDto = new PagingByCursorDto(tempUserId, size, id);
         List<ReadTodoDto> readTodos = todoService.readTodosByCursor(pagingByCursorDto);
         ReadTodoResponse response = ReadTodoResponse.from(readTodos);
 

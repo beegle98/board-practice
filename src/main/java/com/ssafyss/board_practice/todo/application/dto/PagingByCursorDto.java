@@ -9,6 +9,6 @@ import lombok.ToString;
 @ToString
 public class PagingByCursorDto {
     private long userId;
-    private long id;
     private int size;
+    private long id;
 }

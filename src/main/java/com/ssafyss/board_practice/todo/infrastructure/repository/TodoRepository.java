@@ -19,7 +19,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
             """)
     List<Todo> findAllByUserIdAndDeletedFalse(final Long userId);
 
-    List<Todo> findByUserIdOrderByIdAsc(long userId, Pageable pageable);
+    List<Todo> findByUserIdOrderByIdAsc(Long userId, Pageable pageable);
 
     List<Todo> findByUserIdAndIdGreaterThanOrderByIdAsc(Long userId, Long id, Pageable pageable);
 }

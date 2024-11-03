@@ -9,6 +9,6 @@ import lombok.ToString;
 @ToString
 public class PagingByOffsetDto {
     private long userId;
-    private int page;
     private int size;
+    private int page;
 }
