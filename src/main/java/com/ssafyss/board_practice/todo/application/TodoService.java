@@ -1,6 +1,8 @@
 package com.ssafyss.board_practice.todo.application;
 
 import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
+import com.ssafyss.board_practice.todo.application.dto.PagingByCursorDto;
+import com.ssafyss.board_practice.todo.application.dto.PagingByOffsetDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.application.exception.ForbiddenUserToUpdateTodoException;
 import com.ssafyss.board_practice.todo.application.exception.NotFoundTodoException;
@@ -11,6 +13,9 @@ import com.ssafyss.board_practice.user.domain.User;
 import com.ssafyss.board_practice.user.infrastructure.repository.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,5 +81,26 @@ public class TodoService {
         final Todo todo = todoRepository.findById(todoId).orElseThrow(NotFoundTodoException::new);
         isValidUserToUpdate(userId, todo.getUser().getId());
         todo.updateDeleted();
+    }
+
+    public List<ReadTodoDto> readTodosByOffset(PagingByOffsetDto pagingByOffsetDto) {
+        Pageable pageable = PageRequest.of(pagingByOffsetDto.getPage(), pagingByOffsetDto.getSize());
+        List<Todo> todos = todoRepository.findByUserIdOrderByIdAsc(pagingByOffsetDto.getUserId(), pageable);
+        List<ReadTodoDto> result = todos.stream()
+                .map(ReadTodoDto::of)
+                .toList();
+
+        return result;
+    }
+
+    public List<ReadTodoDto> readTodosByCursor(PagingByCursorDto pagingByCursorDto) {
+        Pageable pageable = PageRequest.of(0, pagingByCursorDto.getSize(), Sort.by("id").ascending());
+        List<Todo> todos = todoRepository.findByUserIdAndIdGreaterThanOrderByIdAsc(pagingByCursorDto.getUserId(),
+                pagingByCursorDto.getId(), pageable);
+        List<ReadTodoDto> result = todos.stream()
+                .map(ReadTodoDto::of)
+                .toList();
+
+        return result;
     }
 }
