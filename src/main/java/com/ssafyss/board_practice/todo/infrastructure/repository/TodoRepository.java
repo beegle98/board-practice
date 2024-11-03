@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface TodoRepository extends JpaRepository<Todo, Long> {
-    Optional<Todo> findById(final Long id);
+    Optional<Todo> findById(Long id);
 
     @Query("""
             SELECT t
@@ -17,7 +17,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
             WHERE tu.id = :userId AND t.deleted = FALSE
             ORDER BY t.createdAt
             """)
-    List<Todo> findAllByUserIdAndDeletedFalse(final Long userId);
+    List<Todo> findAllByUserIdAndDeletedFalse(Long userId);
 
     List<Todo> findByUserIdOrderByIdAsc(Long userId, Pageable pageable);
 

@@ -38,7 +38,7 @@ public class TodoService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReadTodoDto> readAllTodos(final Long userId) {
+    public List<ReadTodoDto> readAllTodos(Long userId) {
         isValidUser(userId);
         final List<Todo> readTodos = todoRepository.findAllByUserIdAndDeletedFalse(userId);
         return readTodos.stream()
@@ -46,12 +46,12 @@ public class TodoService {
                 .toList();
     }
 
-    private User isValidUser(final Long userId) {
+    private User isValidUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(NotFoundUserException::new);
     }
 
-    public ReadTodoDto createTodo(final CreateTodoDto createTodoDto) {
+    public ReadTodoDto createTodo(CreateTodoDto createTodoDto) {
         final User user = isValidUser(createTodoDto.userId());
         final Long todoId = saveTodo(user, createTodoDto.content());
         final Todo createdTodo = todoRepository.findById(todoId)
@@ -59,7 +59,7 @@ public class TodoService {
         return ReadTodoDto.of(createdTodo);
     }
 
-    private Long saveTodo(final User user, final String content) {
+    private Long saveTodo(User user, String content) {
         final Todo todo = Todo.builder()
                 .user(user)
                 .content(content)
@@ -68,20 +68,20 @@ public class TodoService {
         return savedTodo.getId();
     }
 
-    public void updateTodo(final Long userId, final Long todoId) {
+    public void updateTodo(Long userId, Long todoId) {
         isValidUser(userId);
         final Todo todo = todoRepository.findById(todoId).orElseThrow(NotFoundTodoException::new);
         isValidUserToUpdate(userId, todo.getUser().getId());
         todo.updateCompleted();
     }
 
-    private void isValidUserToUpdate(final Long userId, final Long todoUserId) {
+    private void isValidUserToUpdate(Long userId, Long todoUserId) {
         if (!userId.equals(todoUserId)) {
             throw new ForbiddenUserToUpdateTodoException();
         }
     }
 
-    public void deleteTodo(final Long userId, final Long todoId) {
+    public void deleteTodo(Long userId, Long todoId) {
         isValidUser(userId);
         final Todo todo = todoRepository.findById(todoId).orElseThrow(NotFoundTodoException::new);
         isValidUserToUpdate(userId, todo.getUser().getId());
@@ -89,8 +89,8 @@ public class TodoService {
     }
 
     public List<ReadTodoDto> readTodosByOffset(PagingByOffsetDto pagingByOffsetDto) {
-        Pageable pageable = PageRequest.of(pagingByOffsetDto.getPage(), pagingByOffsetDto.getSize());
-        List<Todo> todos = todoRepository.findByUserIdOrderByIdAsc(pagingByOffsetDto.getUserId(), pageable);
+        Pageable pageable = PageRequest.of(pagingByOffsetDto.page(), pagingByOffsetDto.size());
+        List<Todo> todos = todoRepository.findByUserIdOrderByIdAsc(pagingByOffsetDto.userId(), pageable);
         List<ReadTodoDto> result = todos.stream()
                 .map(ReadTodoDto::of)
                 .toList();
@@ -99,9 +99,9 @@ public class TodoService {
     }
 
     public List<ReadTodoDto> readTodosByCursor(PagingByCursorDto pagingByCursorDto) {
-        Pageable pageable = PageRequest.of(0, pagingByCursorDto.getSize(), Sort.by("id").ascending());
-        List<Todo> todos = todoRepository.findByUserIdAndIdGreaterThanOrderByIdAsc(pagingByCursorDto.getUserId(),
-                pagingByCursorDto.getId(), pageable);
+        Pageable pageable = PageRequest.of(0, pagingByCursorDto.size(), Sort.by("id").ascending());
+        List<Todo> todos = todoRepository.findByUserIdAndIdGreaterThanOrderByIdAsc(pagingByCursorDto.userId(),
+                pagingByCursorDto.id(), pageable);
         List<ReadTodoDto> result = todos.stream()
                 .map(ReadTodoDto::of)
                 .toList();

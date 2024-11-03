@@ -1,14 +1,14 @@
 package com.ssafyss.board_practice.todo.application.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
 
-@Getter
-@AllArgsConstructor
-@ToString
-public class PagingByOffsetDto {
-    private long userId;
-    private int size;
-    private int page;
+public record PagingByOffsetDto(
+        Long userId,
+        int size,
+        int page
+) {
+
+    public static PagingByOffsetDto of(Long userId, int size, int page) {
+        return new PagingByOffsetDto(userId, size, page);
+    }
+
 }

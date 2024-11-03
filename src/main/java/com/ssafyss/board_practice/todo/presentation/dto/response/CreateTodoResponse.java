@@ -9,7 +9,7 @@ public record CreateTodoResponse(
         boolean completed
 ) implements ResponseDto {
 
-    public static CreateTodoResponse of(final ReadTodoDto dto) {
+    public static CreateTodoResponse of(ReadTodoDto dto) {
         return new CreateTodoResponse(
                 dto.id(),
                 dto.content(),

@@ -1,14 +1,14 @@
 package com.ssafyss.board_practice.todo.application.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
 
-@Getter
-@AllArgsConstructor
-@ToString
-public class PagingByCursorDto {
-    private long userId;
-    private int size;
-    private long id;
+public record PagingByCursorDto(
+        Long userId,
+        int size,
+        Long id
+) {
+
+    public static PagingByCursorDto of(Long userId, int size, Long id) {
+        return new PagingByCursorDto(userId, size, id);
+    }
+
 }

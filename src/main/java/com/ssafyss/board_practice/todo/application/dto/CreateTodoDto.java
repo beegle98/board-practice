@@ -7,7 +7,7 @@ public record CreateTodoDto(
         String content
 ) {
 
-    public static CreateTodoDto of(final Long userId, final CreateTodoRequest request) {
+    public static CreateTodoDto of(Long userId, CreateTodoRequest request) {
         return new CreateTodoDto(userId, request.content());
     }
 }

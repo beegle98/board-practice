@@ -6,10 +6,10 @@ import java.util.List;
 
 public record ReadTodoResponse(List<TodoInfoResponse> todos) implements ResponseDto {
 
-    public static ReadTodoResponse from(final List<ReadTodoDto> readTodoDtos) {
+    public static ReadTodoResponse from(List<ReadTodoDto> readTodoDtos) {
         final List<TodoInfoResponse> response = readTodoDtos.stream()
-                                                            .map(TodoInfoResponse::from)
-                                                            .toList();
+                .map(TodoInfoResponse::from)
+                .toList();
         return new ReadTodoResponse(response);
     }
 
@@ -19,7 +19,7 @@ public record ReadTodoResponse(List<TodoInfoResponse> todos) implements Response
             boolean completed
     ) {
 
-        public static TodoInfoResponse from(final ReadTodoDto readTodoDto) {
+        public static TodoInfoResponse from(ReadTodoDto readTodoDto) {
             return new TodoInfoResponse(
                     readTodoDto.id(),
                     readTodoDto.content(),

@@ -10,7 +10,7 @@ public record ReadTodoDto(
         boolean deleted
 ) {
 
-    public static ReadTodoDto of(final Todo todo) {
+    public static ReadTodoDto of(Todo todo) {
         return new ReadTodoDto(
                 todo.getId(),
                 todo.getUser().getId(),

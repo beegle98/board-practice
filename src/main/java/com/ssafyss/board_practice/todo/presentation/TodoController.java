@@ -48,7 +48,7 @@ public class TodoController {
 
     @PostMapping(value = "")
     public ResponseEntity<CreateTodoResponse> createTodo(
-            @RequestBody final CreateTodoRequest request
+            @RequestBody CreateTodoRequest request
     ) {
         final CreateTodoDto createTodoDto = CreateTodoDto.of(tempUserId, request);
         final ReadTodoDto readTodoDto = todoService.createTodo(createTodoDto);
