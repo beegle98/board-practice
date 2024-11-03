@@ -1,7 +1,6 @@
 package com.ssafyss.board_practice.todo.application;
 
 import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
-import com.ssafyss.board_practice.todo.application.dto.ReadTodoDetailDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.application.exception.ForbiddenUserToUpdateTodoException;
 import com.ssafyss.board_practice.todo.application.exception.NotFoundTodoException;
@@ -42,12 +41,12 @@ public class TodoService {
                 .orElseThrow(NotFoundUserException::new);
     }
 
-    public ReadTodoDetailDto createTodo(final CreateTodoDto createTodoDto) {
+    public ReadTodoDto createTodo(final CreateTodoDto createTodoDto) {
         final User user = isValidUser(createTodoDto.userId());
         final Long todoId = saveTodo(user, createTodoDto.content());
         final Todo createdTodo = todoRepository.findById(todoId)
                 .orElseThrow(NotFoundTodoException::new);
-        return ReadTodoDetailDto.from(createdTodo);
+        return ReadTodoDto.of(createdTodo);
     }
 
     private Long saveTodo(final User user, final String content) {

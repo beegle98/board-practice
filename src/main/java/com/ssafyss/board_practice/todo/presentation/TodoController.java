@@ -2,12 +2,10 @@ package com.ssafyss.board_practice.todo.presentation;
 
 import com.ssafyss.board_practice.todo.application.TodoService;
 import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
-import com.ssafyss.board_practice.todo.application.dto.ReadTodoDetailDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.presentation.dto.request.CreateTodoRequest;
 import com.ssafyss.board_practice.todo.presentation.dto.response.CreateTodoResponse;
 import com.ssafyss.board_practice.todo.presentation.dto.response.ReadTodoResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,47 +33,43 @@ public class TodoController {
         this.todoService = todoService;
     }
 
+    // 로그인 정보를 세션에 저장할 지 토큰으로 할 지 모르겠어서 일단 임시로 UserId 하드코딩
+    // 그리고 애초에 샌드박스에 로그인 기능이 없어서 하려면 따로 테스트 해야된다.
+    private final long tempUserId = 5L;
+
     @GetMapping(value = "")
     public ResponseEntity<ReadTodoResponse> readAllTodo(
-            final HttpSession session
     ) {
-//        final User user = (User) session.getAttribute("userInfo");
-        final List<ReadTodoDto> readAllTodos = todoService.readAllTodos(1L);
+        final List<ReadTodoDto> readAllTodos = todoService.readAllTodos(tempUserId);
         final ReadTodoResponse response = ReadTodoResponse.from(readAllTodos);
-        log.info(response.toString());
+        log.info("readAllTodo : {}", response.toString());
         return ResponseEntity.ok(response);
     }
 
     @PostMapping(value = "")
     public ResponseEntity<CreateTodoResponse> createTodo(
-            @RequestBody final CreateTodoRequest request,
-            final HttpSession session
+            @RequestBody final CreateTodoRequest request
     ) {
-//        final User user = (User) session.getAttribute("userInfo");
-        final CreateTodoDto createTodoDto = CreateTodoDto.of(1L, request);
-        final ReadTodoDetailDto todo = todoService.createTodo(createTodoDto);
-        final CreateTodoResponse response = CreateTodoResponse.of(todo);
-
+        final CreateTodoDto createTodoDto = CreateTodoDto.of(tempUserId, request);
+        final ReadTodoDto readTodoDto = todoService.createTodo(createTodoDto);
+        final CreateTodoResponse response = CreateTodoResponse.of(readTodoDto);
+        log.info("createTodo : {}", response.toString());
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping(value = "/{todoId}")
     public ResponseEntity<Void> updateTodo(
-            @PathVariable(value = "todoId") Long todoId,
-            final HttpSession session
+            @PathVariable(value = "todoId") Long todoId
     ) {
-//        final User user = (User) session.getAttribute("userInfo");
-        todoService.updateTodo(1L, todoId);
+        todoService.updateTodo(tempUserId, todoId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/{todoId}")
     public ResponseEntity<Void> deleteTodo(
-            @PathVariable(value = "todoId") Long todoId,
-            final HttpSession session
+            @PathVariable(value = "todoId") Long todoId
     ) {
-//        final User user = (User) session.getAttribute("userInfo");
-        todoService.deleteTodo(1L, todoId);
+        todoService.deleteTodo(tempUserId, todoId);
         return ResponseEntity.noContent().build();
     }
 }
