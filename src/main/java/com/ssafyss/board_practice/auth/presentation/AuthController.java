@@ -24,7 +24,8 @@ public class AuthController {
     @PostMapping("/checkEmail")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse checkEmail(@RequestBody CheckEmailRequest request) {
-        authService.checkEmail(request.getEmail());
+        authService.checkEmail(request.email());
+
         return ApiResponse.builder()
                 .message(SuccessMessage.AVAILABLE_USER_EMAIL.getMessage())
                 .build();
@@ -33,7 +34,7 @@ public class AuthController {
     @PostMapping("/signUp")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse signUp(@RequestBody CreateUserRequest request) {
-        authService.signUp(request.getEmail(), request.getPassword());
+        authService.signUp(request.email(), request.password());
         return ApiResponse.builder()
                 .message(SuccessMessage.SUCCESS_SIGN_UP.getMessage())
                 .build();
@@ -42,7 +43,7 @@ public class AuthController {
     @PostMapping("/signIn")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse signIn(@RequestBody SignInRequest request) {
-        SignInResponse signInResponse = authService.signIn(request.getEmail(), request.getPassword());
+        SignInResponse signInResponse = authService.signIn(request.email(), request.password());
         return ApiResponse.builder()
                 .data(signInResponse)
                 .message(SuccessMessage.SUCCESS_SIGN_IN.getMessage())
