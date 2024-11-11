@@ -31,9 +31,11 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void signUp(String email, String password) {
         checkEmail(email);
+        // 회원가입 할 때 비밀번호 인코딩 코드 추가
+        final String encodedPassword = encoder.encode(password);
         User user = User.builder()
                 .email(email)
-                .password(password)
+                .password(encodedPassword)
                 .build();
         userRepository.save(user);
     }
