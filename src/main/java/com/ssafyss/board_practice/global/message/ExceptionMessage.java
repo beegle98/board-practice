@@ -14,6 +14,7 @@ public enum ExceptionMessage {
     BAD_REQUEST_PASSWORD_NOT_MATCH("비밀번호가 일치하지 않습니다"),
 
     // TODO
+    NOT_FOUND_TODO("찾을 수 없는 Todo입니다"),
     BAD_REQUEST_TODO_FIRST_PAGE("첫번째 페이지 입니다"),
     BAD_REQUEST_TODO_LAST_PAGE("마지막 페이지 입니다");
 
