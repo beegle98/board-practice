@@ -32,8 +32,8 @@ public class TodoServiceImpl implements TodoService {
     @Transactional
     public void create(CreateTodoRequest request) {
         Todo todo = Todo.builder()
-                .userId(request.getUserId())
-                .content(request.getContent())
+                .userId(request.userId())
+                .content(request.content())
                 .build();
         todoRepository.save(todo);
     }
@@ -41,7 +41,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public Page<ReadTodoDto> read(ReadTodoRequest request, Pageable pageable) {
         QTodo todo = QTodo.todo;
-        BooleanBuilder filterBuilder = TodoQueryHelper.createFilterBuilder(request.getUserId(), todo);
+        BooleanBuilder filterBuilder = TodoQueryHelper.createFilterBuilder(request.userId(), todo);
 
         long totalCount = queryFactory.selectFrom(todo)
                 .where(filterBuilder)
@@ -62,7 +62,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     @Transactional
     public void delete(DeleteTodoRequest request) {
-        Todo todo = todoRepository.findById(request.getId())
+        Todo todo = todoRepository.findById(request.id())
                 .orElseThrow(() -> new TodoNotFoundException(ExceptionMessage.NOT_FOUND_TODO.getMessage()));
         todo.delete();
     }
@@ -70,8 +70,8 @@ public class TodoServiceImpl implements TodoService {
     @Override
     @Transactional
     public void updateContent(UpdateTodoRequest request) {
-        Todo todo = todoRepository.findById(request.getId())
+        Todo todo = todoRepository.findById(request.id())
                 .orElseThrow(() -> new TodoNotFoundException(ExceptionMessage.NOT_FOUND_TODO.getMessage()));
-        todo.updateContent(request.getContent());
+        todo.updateContent(request.content());
     }
 }

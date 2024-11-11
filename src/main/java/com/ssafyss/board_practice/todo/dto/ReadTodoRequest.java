@@ -1,8 +1,6 @@
 package com.ssafyss.board_practice.todo.dto;
 
-import lombok.Getter;
 
-@Getter
-public class ReadTodoRequest {
-    private Long userId;
+public record ReadTodoRequest(Long userId) {
+
 }
